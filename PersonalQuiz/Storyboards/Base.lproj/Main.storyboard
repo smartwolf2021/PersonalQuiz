@@ -337,6 +337,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="E2o-dx-KJo" id="bDz-7c-sJ4"/>
+                        <outlet property="titleLabel" destination="jHd-dV-J4H" id="DEH-iU-pb9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cMY-Ds-zbc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="QTn-6T-0Cv" userLabel="Exit" sceneMemberID="exit"/>

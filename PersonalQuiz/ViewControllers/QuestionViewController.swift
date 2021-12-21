@@ -41,6 +41,7 @@ class QuestionViewController: UIViewController {
     //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
        
     }
@@ -135,4 +136,12 @@ extension QuestionViewController {
         
     }
     
+}
+
+//MARK: - Navigation
+extension QuestionViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let resultVC = segue.destination as? ResultViewController else {return}
+        resultVC.answers = answersChoosen        
+    }
 }
