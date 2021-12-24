@@ -19,37 +19,48 @@ class ResultViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     //MARK: - Public Properties
-    var answers: [Answer] = []
+    var answers: [Answer]!
     
     //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.setHidesBackButton(true, animated: false)
+        navigationItem.setHidesBackButton(true, animated: false)
         getResult()
     }
     
     //MARK: - Private Methods
-    private func getResult() {
-        //нужно ли этот метод закидывать в модель?
-        
-        var answersCounts: [AnimalType: Int] = [
-            AnimalType.dog : 0,
-            AnimalType.cat : 0,
-            AnimalType.rabbit : 0,
-            AnimalType.turtle : 0
-        ]
-        
-        for answer in answers {
-            answersCounts[answer.type]! += 1
-        }
-        
-        let sortedAnswersCounts = answersCounts.sorted { $0.1 > $1.1 }
-        
-        let resultType = sortedAnswersCounts.first?.key
+    fileprivate func updateUI(_ resultType: AnimalType?) {
         let typeCharacter = resultType?.rawValue
         
         titleLabel.text = "Вы - \(typeCharacter!)!"
         descriptionLabel.text = resultType?.definition
+    }
+    
+    private func getResult() {
+        //нужно ли этот метод закидывать в модель?
+        
+        var answersCounts: [AnimalType: Int] = [:]
+        let animals = answers.map {$0.type}
+        
+//        for animal in animals {
+//            if let animalTypeCount = answersCounts[animal] {
+//                answersCounts.updateValue(animalTypeCount + 1, forKey: animal)
+//            } else {
+//                answersCounts[animal] = 1
+//            }
+//        }
+        
+        for animal in animals {
+            answersCounts[animal] = (answersCounts[animal] ?? 0) + 1
+        }
+        
+        //решение в одну строку
+//        let mostFrequencyType = Dictionary(grouping: answers) {$0.type}.sorted {$0.value.count > $1.value.count}.first?.key
+        
+        let sortedAnswersCounts = answersCounts.sorted { $0.1 > $1.1 }
+        
+        let resultType = sortedAnswersCounts.first?.key
+        updateUI(resultType)
 
     }
     
